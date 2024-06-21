@@ -1,13 +1,55 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:recommended",
-        "helpers:pinGitHubActionDigests",
-        ":pinDevDependencies"
-    ],
-    "osvVulnerabilityAlerts": true,
-    "dependencyDashboard": true,
-    "labels": [
-        "dependencies"
-    ]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "docker:pinDigests",
+    "helpers:pinGitHubActionDigests",
+    ":pinDevDependencies"
+  ],
+  "osvVulnerabilityAlerts": true,
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": ["Rust"],
+      "matchDepNames": ["rust"],
+      "matchManagers": ["custom.regex"],
+      "commitMessageTopic": "rust"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "depNameTemplate": "cargo-cyclonedx",
+      "packageNameTemplate": "CycloneDX/cyclonedx-rust-cargo",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^cargo-cyclonedx-(?<version>.*)$",
+      "fileMatch": ["(^|/)cargo-plugins\\.sh"],
+      "matchStrings": ["cargo-cyclonedx@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
+    },
+    {
+      "customType": "regex",
+      "depNameTemplate": "cargo-msrv",
+      "packageNameTemplate": "foresterre/cargo-msrv",
+      "datasourceTemplate": "github-releases",
+      "fileMatch": ["(^|/)cargo-plugins\\.sh"],
+      "matchStrings": ["cargo-msrv@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
+    },
+    {
+      "customType": "regex",
+      "depNameTemplate": "cargo-deny",
+      "packageNameTemplate": "EmbarkStudios/cargo-deny",
+      "datasourceTemplate": "github-releases",
+      "fileMatch": ["(^|/)cargo-plugins\\.sh"],
+      "matchStrings": ["cargo-deny@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
+    },
+    {
+      "customType": "regex",
+      "depNameTemplate": "cargo-udeps",
+      "packageNameTemplate": "est31/cargo-udeps",
+      "datasourceTemplate": "github-releases",
+      "fileMatch": ["(^|/)cargo-plugins\\.sh"],
+      "matchStrings": ["cargo-udeps@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
+    }
+  ]
 }
