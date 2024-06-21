@@ -18,7 +18,7 @@ jobs:
         uses: dotanuki-labs/github-actions/quality/bash@main
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3.3.0
+        uses: docker/setup-buildx-action@d70bba72b1f3fd22344832f00baa16ece964efeb # v3.3.0
 
       - name: Run Component Tests
         run: ./component-tests.sh
