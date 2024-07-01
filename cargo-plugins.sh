@@ -19,7 +19,7 @@ cargo install cargo-msrv@0.15.1 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-udeps"
-cargo install cargo-udeps@0.1.47 --force --quiet --locked
+cargo install cargo-udeps@0.1.49 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-cyclonedx"
