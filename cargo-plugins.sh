@@ -23,7 +23,7 @@ cargo install cargo-udeps@0.1.49 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-cyclonedx"
-cargo install cargo-cyclonedx@0.5.3 --force --quiet --locked
+cargo install cargo-cyclonedx@0.5.4 --force --quiet --locked
 
 echo
 echo "✅ Done"
