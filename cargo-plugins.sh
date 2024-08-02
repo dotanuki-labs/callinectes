@@ -11,7 +11,7 @@ rustup target add x86_64-unknown-linux-gnu
 
 echo
 echo "🦀 Installing cargo-deny"
-cargo install cargo-deny@0.15.1 --force --quiet --locked
+cargo install cargo-deny@0.16.0 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-msrv"
