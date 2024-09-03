@@ -6,74 +6,90 @@ set -e
 
 usage() {
     echo
-    echo "Available checks:"
+    echo "Available tasks:"
     echo
-    echo "code      # Runs static analysers against Rust sources"
-    echo "deps      # Inspects dependencies and drive SCA checks"
+    echo "fmt           # Checks formatting on Rust source files"
+    echo "clippy        # Runs Clippy lints against Rust source files"
+    echo "deny          # Checks vulnerabilities and compliance of project dependencies"
+    echo "udeps         # Checks unused dependencies declared in Cargo.toml files"
+    echo "msrv          # Checks the Minimal Supported Rust Version for the project"
+    echo "cyclonedx     # Generates a CycloneDx SBOM file from project dependencies"
     echo
 }
 
-check_code_smells() {
+check_sources_formatting() {
     echo
     echo "🦀 Checking code formatting (rustfmt)"
     echo
-    rustup component add rustfmt
     cargo fmt --check
+}
 
+lint_source_files() {
     echo
     echo "🦀 Checking code smells (clippy)"
     echo
-    rustup component add clippy
     cargo clippy --all-targets --all-features -- -D warnings
-
-    echo
-    echo "✅ Code quality checked with success"
-    echo
 }
 
-check_supply_chain() {
+check_vulnerable_dependencies() {
     echo
-    echo "🦀 Running cargo-msrv"
-    echo
-    cargo msrv verify
-
-    echo
-    echo "🦀 Running cargo-deny"
+    echo "🦀 Checking supply chain issues (cargo-deny)"
     echo
     cargo deny check
-
-    echo
-    echo "🦀 Running cargo-cyclonedx"
-    echo
-    cargo cyclonedx --format json
-
-    echo
-    echo "🦀 Running cargo-udeps"
-    rustup default nightly
-    cargo +nightly udeps
-
-    echo
-    echo "✅ Supply-chain checked with success"
-    echo
 }
 
-readonly what="$1"
+check_unused_dependencies() {
+    echo
+    echo "🦀 Checking declared and unused dependencies (cargo-udeps)"
+    echo
+    rustup default nightly
+    cargo +nightly udeps
+}
 
-if [[ -z "$what" ]]; then
+check_msrv() {
+    echo
+    echo "🦀 Checking Minimal Supported Rust Version (cargo-msrv)"
+    echo
+    cargo msrv verify
+}
+
+generate_cyclonedx_sbom() {
+    echo
+    echo "🦀 Generating CycloneDX SBOM (cargo-cyclonedx)"
+    echo
+    cargo cyclonedx --format json
+}
+
+if test "$#" -eq 0; then
     usage
     exit 0
 fi
 
-case "$what" in
-"code")
-    check_code_smells
-    ;;
-"deps")
-    check_supply_chain
-    ;;
-*)
-    echo "Error: unsupported check → $what"
-    usage
-    exit 1
-    ;;
-esac
+while test "$#" -gt 0; do
+    case "$1" in
+    "fmt")
+        check_sources_formatting
+        ;;
+    "clippy")
+        lint_source_files
+        ;;
+    "deny")
+        check_vulnerable_dependencies
+        ;;
+    "udeps")
+        check_unused_dependencies
+        ;;
+    "msrv")
+        check_msrv
+        ;;
+    "cyclonedx")
+        generate_cyclonedx_sbom
+        ;;
+    *)
+        echo "Error: unsupported task → $1"
+        usage
+        exit 1
+        ;;
+    esac
+    shift
+done

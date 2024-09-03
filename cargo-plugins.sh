@@ -6,8 +6,11 @@ set -euo pipefail
 
 echo
 echo "🦀 Installing Rust toolchains"
+echo
 rustup target add aarch64-unknown-linux-gnu
 rustup target add x86_64-unknown-linux-gnu
+rustup component add rustfmt
+rustup component add clippy
 
 echo
 echo "🦀 Installing cargo-deny"
