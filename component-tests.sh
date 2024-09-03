@@ -19,12 +19,17 @@ docker build . -t dotanuki-labs/callinectes
 echo
 echo "🔥 Checking code smells"
 echo
-docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes code
+docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes fmt clippy
+
+echo
+echo "🔥 Checking MSRV"
+echo
+docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes msrv
 
 echo
 echo "🔥 Checking dependencies"
 echo
-docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes deps
+docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes deny cyclonedx udeps
 
 echo
 echo "✅ Done"
