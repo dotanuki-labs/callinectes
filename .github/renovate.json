@@ -45,11 +45,11 @@
     },
     {
       "customType": "regex",
-      "depNameTemplate": "cargo-udeps",
-      "packageNameTemplate": "est31/cargo-udeps",
+      "depNameTemplate": "cargo-machete",
+      "packageNameTemplate": "bnjbvr/cargo-machete",
       "datasourceTemplate": "github-releases",
       "fileMatch": ["(^|/)cargo-plugins\\.sh"],
-      "matchStrings": ["cargo-udeps@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
+      "matchStrings": ["cargo-machete@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
     }
   ]
 }
