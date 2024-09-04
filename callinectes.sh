@@ -6,12 +6,12 @@ set -e
 
 usage() {
     echo
-    echo "Available tasks:"
+    echo "Available checks:"
     echo
     echo "fmt           # Checks formatting on Rust source files"
     echo "clippy        # Runs Clippy lints against Rust source files"
     echo "deny          # Checks vulnerabilities and compliance of project dependencies"
-    echo "udeps         # Checks unused dependencies declared in Cargo.toml files"
+    echo "machete       # Checks unused dependencies declared in Cargo.toml files"
     echo "msrv          # Checks the Minimal Supported Rust Version for the project"
     echo "cyclonedx     # Generates a CycloneDx SBOM file from project dependencies"
     echo
@@ -40,10 +40,9 @@ check_vulnerable_dependencies() {
 
 check_unused_dependencies() {
     echo
-    echo "🦀 Checking declared and unused dependencies (cargo-udeps)"
+    echo "🦀 Checking declared and unused dependencies (cargo-machete)"
     echo
-    rustup default nightly
-    cargo +nightly udeps
+    cargo machete
 }
 
 check_msrv() {
@@ -76,7 +75,7 @@ while test "$#" -gt 0; do
     "deny")
         check_vulnerable_dependencies
         ;;
-    "udeps")
+    "machete")
         check_unused_dependencies
         ;;
     "msrv")
@@ -86,7 +85,7 @@ while test "$#" -gt 0; do
         generate_cyclonedx_sbom
         ;;
     *)
-        echo "Error: unsupported task → $1"
+        echo "Error: unsupported checks → $1"
         usage
         exit 1
         ;;

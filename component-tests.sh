@@ -29,7 +29,7 @@ docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes msrv
 echo
 echo "🔥 Checking dependencies"
 echo
-docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes deny cyclonedx udeps
+docker run --rm -v "$temp_folder:/usr/src" dotanuki-labs/callinectes deny machete cyclonedx
 
 echo
 echo "✅ Done"
