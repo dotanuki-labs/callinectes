@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+env:
+  REGISTRY_IMAGE: ghcr.io/${{ github.repository }}
+
 jobs:
   checks:
     runs-on: ubuntu-22.04
@@ -42,7 +45,7 @@ jobs:
         id: docker-metadata
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.repository }}
+          images: ${{ env.REGISTRY_IMAGE }}
 
       - name: Set up docker-buildx
         uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
@@ -60,10 +63,13 @@ jobs:
         with:
           platforms: linux/${{ steps.docker-env.outputs.platform }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
-          outputs: type=image,name=${{ github.repository }},push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export build digest
-        run: ./docker-build-helper.sh collect-digest ${{ steps.build.outputs.digest }}"
+        run: |
+          mkdir -p /tmp/digests
+          digest="${{ steps.build.outputs.digest }}"
+          touch "/tmp/digests/${digest#sha256:}"
 
       - name: Upload digest
         uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
@@ -90,7 +96,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ github.repository }}
+          images: ${{ env.REGISTRY_IMAGE }}
 
       - name: Log in to Github Container Registry
         uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
@@ -101,7 +107,9 @@ jobs:
 
       - name: Create and push merged manifest
         working-directory: /tmp/digests
-        run: ./docker-build-helper.sh update-manifest ${{ github.repository }}"
+        run: |
+          docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
 
       - name: Inspect image
-        run: docker buildx imagetools inspect ${{ github.repository }}:${{ steps.meta.outputs.version }}
+        run: docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
