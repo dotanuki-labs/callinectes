@@ -13,20 +13,24 @@ rustup component add rustfmt
 rustup component add clippy
 
 echo
+echo "🦀 Installing cargo-binstall"
+curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+
+echo
 echo "🦀 Installing cargo-deny"
-cargo install cargo-deny@0.16.1 --force --quiet --locked
+cargo binstall cargo-deny@0.16.1 --force --quiet --locked --no-confirm
 
 echo
 echo "🦀 Installing cargo-msrv"
-cargo install cargo-msrv@0.15.1 --force --quiet --locked
+cargo binstall cargo-msrv@0.15.1 --force --quiet --locked --no-confirm
 
 echo
 echo "🦀 Installing cargo-machete"
-cargo install cargo-machete@0.6.2 --force --quiet --locked
+cargo binstall cargo-machete@0.6.2 --force --quiet --locked --no-confirm
 
 echo
 echo "🦀 Installing cargo-cyclonedx"
-cargo install cargo-cyclonedx@0.5.5 --force --quiet --locked
+cargo binstall cargo-cyclonedx@0.5.5 --force --quiet --locked --no-confirm
 
 echo
 echo "✅ Done"

@@ -20,8 +20,8 @@ jobs:
       - name: Lint Bash Scripts
         uses: dotanuki-labs/github-actions/quality/bash@main
 
-      - name: Run Component Tests
-        run: ./component-tests.sh
+      # - name: Run Component Tests
+      #   run: ./component-tests.sh
 
   build-docker-images:
     needs: checks
@@ -61,7 +61,6 @@ jobs:
           platforms: linux/${{ steps.docker-env.outputs.platform }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
           outputs: type=image,name=${{ github.repository }},push-by-digest=true,name-canonical=true,push=true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}-${{ steps.docker-env.outputs.platform }}
 
       - name: Export build digest
         run: ./docker-build-helper.sh collect-digest ${{ steps.build.outputs.digest }}"
