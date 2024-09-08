@@ -5,6 +5,7 @@
 set -e
 
 readonly runner="$RUNNER_NAME"
+readonly docker_image="ghcr.io/dotanuki-labs/callinectes"
 
 prepare_env_for_build() {
     case "$runner" in
@@ -21,20 +22,15 @@ prepare_env_for_build() {
     esac
 }
 
-collect_digest() {
-    local
-    mkdir -p /tmp/digests
-    digest="$argument"
-    touch "/tmp/digests/$digest#sha256"
-}
-
 merge_and_push_manifest() {
-    local merged
-    merged=$(jq -cr '.tags | map("-t " + .) | join(" ")' <<<"$DOCKER_METADATA_OUTPUT_JSON")
+    local package="$docker_image:$argument"
+    local latest="$docker_image:latest"
 
-    local name
-    name=$(printf "$argument@sha256:%s " *)
-    docker buildx imagetools create "$merged" "$name"
+    docker manifest create "$latest" --amend "$package"-amd64 --amend "$package"-arm64
+    docker manifest annotate --arch amd64 --os linux "$latest" "$package"-amd64
+    docker manifest annotate --arch arm64 --os linux "$latest" "$package"-arm64
+    docker manifest inspect "$latest"
+    docker manifest push "$latest"
 }
 
 readonly task="$1"
@@ -44,10 +40,7 @@ case "$task" in
 prepare-environment)
     prepare_env_for_build
     ;;
-collect-digest)
-    collect_build_digest
-    ;;
-update-manifest)
+push-merged-manifest)
     merge_and_push_manifest
     ;;
 *)
