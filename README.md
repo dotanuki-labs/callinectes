@@ -24,7 +24,7 @@ New versions for these extensions are automatically managed by
 You can bring `callinectes` to your CI pipeline with Docker:
 
 ```bash
-docker run --rm -v "${PWD}:/usr/src" "ghcr.io/dotanuki-labs/callinectes:latest" <task> <task> ...
+docker run --rm -v "${PWD}:/usr/src" "ghcr.io/dotanuki-labs/callinectes" <task> <task> ...
 ```
 
 where `task` is one of the following
@@ -38,7 +38,7 @@ where `task` is one of the following
 For example, to check quality on Rust sources:
 
 ```bash
-docker run --rm -v "${PWD}:/usr/src" "ghcr.io/dotanuki-labs/callinectes:latest" fmt clippy
+docker run --rm -v "${PWD}:/usr/src" "ghcr.io/dotanuki-labs/callinectes" fmt clippy
 ```
 
 Please check our entrypoint script to learn specifics on how those tasks are executed.
