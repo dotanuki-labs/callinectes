@@ -16,8 +16,51 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  build-docker-images:
+    needs: checks
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      matrix:
+        runner: ["ubuntu22-amd64-medium", "ubuntu22-arm64-medium"]
+
+    steps:
+      - name: Project Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Prepare build environment
+        id: docker-env
+        run: ./docker-build-helper.sh prepare-environment
+
+      - name: Docker metadata
+        id: docker-metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+
+      - name: Set up docker-buildx
+        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+
+      - name: Log in to Github Container Registry
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567 # v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build container Image
+        id: build
+        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85 # v6.7.0
+        with:
+          push: true
+          provenance: false
+          platforms: linux/${{ steps.docker-env.outputs.platform }}
+          labels: ${{ steps.docker-metadata.outputs.labels }}
+          outputs: type=registry,push=true
+          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}-${{ steps.docker-env.outputs.platform }}
+
+  merge-manifests:
     runs-on: ubuntu-22.04
+    needs: build-docker-images
 
     steps:
       - name: Project Checkout
@@ -30,15 +73,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
-
-      - name: Build and publish container Image
-        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85 # v6.7.0
-        with:
-          push: true
-          provenance: false
-          platforms: linux/amd64
-          tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
+      - name: Create and push merged manifest
+        run: ./docker-build-helper.sh push-merged-manifest ${{ github.sha }}
