@@ -55,7 +55,7 @@ jobs:
           tags: ghcr.io/${{ github.repository }}:${{ github.sha }}-${{ steps.docker-env.outputs.platform }}
 
   merge-manifests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: build-docker-images
 
     steps:
