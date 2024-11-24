@@ -18,7 +18,7 @@ cargo install cargo-deny@0.16.2 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-msrv"
-cargo install cargo-msrv@0.16.3 --force --quiet --locked
+cargo install cargo-msrv@0.17.0 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-machete"
