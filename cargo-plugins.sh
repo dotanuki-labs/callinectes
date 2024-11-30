@@ -26,7 +26,7 @@ cargo install cargo-machete@0.7.0 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-cyclonedx"
-cargo install cargo-cyclonedx@0.5.6 --force --quiet --locked
+cargo install cargo-cyclonedx@0.5.7 --force --quiet --locked
 
 echo
 echo "✅ Done"
