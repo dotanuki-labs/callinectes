@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       matrix:
-        runner: ["ubuntu22-amd64-medium", "ubuntu22-arm64-medium"]
+        runner: ["ubuntu-24.04", "ubuntu-24.04-arm"]
 
     steps:
       - name: Project Checkout
