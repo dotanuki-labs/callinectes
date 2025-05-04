@@ -4,15 +4,15 @@
 
 set -e
 
-readonly runner="$RUNNER_NAME"
+readonly runner="$RUNNER_ARCH"
 readonly docker_image="ghcr.io/dotanuki-labs/callinectes"
 
 prepare_env_for_build() {
     case "$runner" in
-    *arm64*)
+    *ARM64*)
         echo "platform=arm64" >>"$GITHUB_OUTPUT"
         ;;
-    *amd64*)
+    *X64*)
         echo "platform=amd64" >>"$GITHUB_OUTPUT"
         ;;
     *)
