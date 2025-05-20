@@ -14,7 +14,3 @@ COPY ./callinectes.sh /bin/callinectes
 WORKDIR /usr/src
 
 ENTRYPOINT [ "callinectes" ]
-
-LABEL org.opencontainers.image.source="https://github.com/dotanuki-labs/callinectes"
-LABEL org.opencontainers.image.description="Dockerized quality and security checks for Rust projects"
-LABEL org.opencontainers.image.licenses="MIT"
