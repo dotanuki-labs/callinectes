@@ -32,6 +32,10 @@ jobs:
         uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
         with:
           images: ghcr.io/${{ github.repository }}
+          annotations: |
+            org.opencontainers.image.source="https://github.com/dotanuki-labs/callinectes"
+            org.opencontainers.image.description="Dockerized quality and security checks for Rust projects"
+            org.opencontainers.image.licenses="MIT"
 
       - name: Set up docker-buildx
         uses: docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2 # v3.10.0
@@ -51,6 +55,7 @@ jobs:
           provenance: false
           platforms: linux/${{ steps.docker-env.outputs.platform }}
           labels: ${{ steps.docker-metadata.outputs.labels }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           outputs: type=registry,push=true
           tags: ghcr.io/${{ github.repository }}:${{ github.sha }}-${{ steps.docker-env.outputs.platform }}
 
