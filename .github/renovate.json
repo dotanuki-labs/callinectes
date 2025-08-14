@@ -8,20 +8,13 @@
   ],
   "osvVulnerabilityAlerts": true,
   "dependencyDashboard": true,
-  "labels": [
-    "dependencies"
-  ],
+  "schedule": ["every weekend"],
+  "labels": ["dependencies"],
   "packageRules": [
     {
-      "description": [
-        "Rust"
-      ],
-      "matchDepNames": [
-        "rust"
-      ],
-      "matchManagers": [
-        "custom.regex"
-      ],
+      "description": ["Rust"],
+      "matchDepNames": ["rust"],
+      "matchManagers": ["custom.regex"],
       "commitMessageTopic": "rust"
     }
   ],
@@ -32,48 +25,32 @@
       "packageNameTemplate": "CycloneDX/cyclonedx-rust-cargo",
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^cargo-cyclonedx-(?<version>.*)$",
-      "managerFilePatterns": [
-        "/(^|/)cargo-plugins\\.sh/"
-      ],
-      "matchStrings": [
-        "cargo-cyclonedx@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"
-      ]
+      "managerFilePatterns": ["/(^|/)cargo-plugins\\.sh/"],
+      "matchStrings": ["cargo-cyclonedx@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
     },
     {
       "customType": "regex",
       "depNameTemplate": "cargo-msrv",
       "packageNameTemplate": "foresterre/cargo-msrv",
       "datasourceTemplate": "github-releases",
-      "managerFilePatterns": [
-        "/(^|/)cargo-plugins\\.sh/"
-      ],
-      "matchStrings": [
-        "cargo-msrv@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"
-      ]
+      "managerFilePatterns": ["/(^|/)cargo-plugins\\.sh/"],
+      "matchStrings": ["cargo-msrv@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
     },
     {
       "customType": "regex",
       "depNameTemplate": "cargo-deny",
       "packageNameTemplate": "EmbarkStudios/cargo-deny",
       "datasourceTemplate": "github-releases",
-      "managerFilePatterns": [
-        "/(^|/)cargo-plugins\\.sh/"
-      ],
-      "matchStrings": [
-        "cargo-deny@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"
-      ]
+      "managerFilePatterns": ["/(^|/)cargo-plugins\\.sh/"],
+      "matchStrings": ["cargo-deny@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
     },
     {
       "customType": "regex",
       "depNameTemplate": "cargo-machete",
       "packageNameTemplate": "bnjbvr/cargo-machete",
       "datasourceTemplate": "github-releases",
-      "managerFilePatterns": [
-        "/(^|/)cargo-plugins\\.sh/"
-      ],
-      "matchStrings": [
-        "cargo-machete@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"
-      ]
+      "managerFilePatterns": ["/(^|/)cargo-plugins\\.sh/"],
+      "matchStrings": ["cargo-machete@(?<currentValue>\\d+\\.\\d+(\\.\\d+)?)"]
     }
   ]
 }
