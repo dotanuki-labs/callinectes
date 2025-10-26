@@ -1,4 +1,4 @@
-# Copyright 2024 Dotanuki Labs
+# Copyright 2025 Dotanuki Labs
 # SPDX-License-Identifier: MIT
 
 name: CI
@@ -18,7 +18,10 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
 
       - name: Lint Bash Scripts
-        uses: dotanuki-labs/github-actions/quality/bash@main
+        uses: dotanuki-labs/github-actions/quality/bash@73651dc53c2f4bbca0a76f0d1ebbb0720883fb8d
+
+      - name: Check MIT license on source files
+        uses: korandoru/hawkeye@2f80559b06187bcd1aa7bca5138fe5e5c53e275f # v6.3.0
 
       - name: Run Component Tests
         run: ./component-tests.sh
