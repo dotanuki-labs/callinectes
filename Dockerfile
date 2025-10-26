@@ -1,4 +1,4 @@
-# Copyright 2024 Dotanuki Labs
+# Copyright 2025 Dotanuki Labs
 # SPDX-License-Identifier: MIT
 
 FROM rust:slim@sha256:7fa728f3678acf5980d5db70960cf8491aff9411976789086676bdf0c19db39e AS builder
