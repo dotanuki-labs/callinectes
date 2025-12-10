@@ -8,6 +8,8 @@
   ],
   "osvVulnerabilityAlerts": true,
   "dependencyDashboard": true,
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
   "schedule": ["every weekend"],
   "labels": ["dependencies"],
   "packageRules": [
