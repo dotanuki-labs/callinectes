@@ -21,7 +21,7 @@ jobs:
         uses: dotanuki-labs/github-actions/quality/bash@fd61dd80c7d022b240d78bb1b8d73f28eced8a17
 
       - name: Check MIT license on source files
-        uses: korandoru/hawkeye@9467ed11e794a33d4f2ebd3aad5937525ab80f23 # v6.4.2
+        uses: korandoru/hawkeye@c57037afedf940370c41eb660837c8aa928d472a # v6.5.1
 
       - name: Run Component Tests
         run: ./component-tests.sh
