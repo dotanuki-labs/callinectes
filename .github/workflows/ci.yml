@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: Lint Bash Scripts
-        uses: dotanuki-labs/github-actions/quality/bash@fd61dd80c7d022b240d78bb1b8d73f28eced8a17
+        uses: dotanuki-labs/github-actions/quality/bash@6a40acb36b6d9918b5de15b74b3473af850204a7
 
       - name: Check MIT license on source files
         uses: korandoru/hawkeye@c57037afedf940370c41eb660837c8aa928d472a # v6.5.1
