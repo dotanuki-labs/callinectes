@@ -1,13 +1,13 @@
 # Copyright 2025 Dotanuki Labs
 # SPDX-License-Identifier: MIT
 
-FROM rust:slim@sha256:9663b80a1621253d30b146454f903de48f0af925c967be48c84745537cd35d8b AS builder
+FROM rust:slim@sha256:7d3701660d2aa7101811ba0c54920021452aa60e5bae073b79c2b137a432b2f4 AS builder
 
 RUN apt-get update && apt-get install -qy pkg-config libssl-dev
 COPY ./cargo-plugins.sh /bin/cargo-plugins.sh
 RUN cargo-plugins.sh
 
-FROM rust:slim@sha256:9663b80a1621253d30b146454f903de48f0af925c967be48c84745537cd35d8b
+FROM rust:slim@sha256:7d3701660d2aa7101811ba0c54920021452aa60e5bae073b79c2b137a432b2f4
 RUN apt-get update && apt-get install -qy pkg-config libssl-dev
 COPY --from=builder /usr/local/cargo/ /usr/local/cargo/
 COPY ./callinectes.sh /bin/callinectes
