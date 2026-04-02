@@ -1,6 +1,6 @@
 # Callinectes
 
-> Dockerized quality and security checks for Rust projects 🦀
+> Dockerized checks for Rust projects 🦀
 
 ## About
 
