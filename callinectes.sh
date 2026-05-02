@@ -35,7 +35,7 @@ check_vulnerable_dependencies() {
     echo
     echo "🦀 Checking supply chain issues (cargo-deny)"
     echo
-    cargo deny check
+    cargo deny check licenses sources
 }
 
 check_unused_dependencies() {
