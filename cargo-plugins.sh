@@ -22,7 +22,7 @@ cargo install cargo-msrv@0.19.3 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-machete"
-cargo install cargo-machete@0.9.1 --force --quiet --locked
+cargo install cargo-machete@0.9.2 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-cyclonedx"
