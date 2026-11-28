@@ -14,7 +14,7 @@ rustup component add clippy
 
 echo
 echo "🦀 Installing cargo-deny"
-cargo install cargo-deny@0.20.2 --force --quiet --locked
+cargo install cargo-deny@0.22.0 --force --quiet --locked
 
 echo
 echo "🦀 Installing cargo-msrv"
